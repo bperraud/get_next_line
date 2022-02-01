@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperraud <bperraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:04:39 by bperraud          #+#    #+#             */
-/*   Updated: 2022/01/28 17:42:36 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/01 23:45:59 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <get_next_line.h>
+#include "get_next_line.h"
 
-size_t	ft_memchr(const void *s, int c, size_t n)
+
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (*s++)
+		i++;
+	return (i);
+}
+
+
+void	*ft_memchr(const void *s, int c, size_t n)
 {
 	const unsigned char	*cs;
 	unsigned char		uc;
@@ -62,82 +74,29 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-static int	ft_wordlen(const char *str, char c)
-{
-	int	i;
 
-	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	return (i);
-}
 
-static int	ft_wordcount(const char *str, char c)
-{
-	int	i;
-	int	nbr_word;
+#include "stdio.h"
 
-	nbr_word = 0;
-	while (*str)
-	{
-		while (*str && *str == c)
-			str++;
-		i = ft_wordlen(str, c);
-		str += i;
-		if (i)
-			nbr_word++;
-	}
-	return (nbr_word);
-}
-
-static char	*ft_strncpy(char *dest, const char *src, unsigned int n)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (src[i] != '\0' && i < n)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-static void	*free_word(char **dest, int nbr_word)
-{
-	while (nbr_word--)
-		free(dest[nbr_word]);
-	free(dest);
-	return (NULL);
-}
-
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *str)
 {
 	char	**dest;
-	int		nbr_word;
 	int		i;
-	int		word_len;
 
-	if (!s)
-		return (NULL);
-	nbr_word = ft_wordcount(s, c);
-	dest = malloc((nbr_word + 1) * sizeof(char *));
-	if (!dest)
-		return (free_word(dest, 0));
 	i = 0;
-	while (i < nbr_word)
+	dest = malloc(2 * sizeof(char *));
+	while (str[i])
 	{
-		while (*s && *s == c)
-			s++;
-		word_len = ft_wordlen(s, c);
-		dest[i] = malloc((word_len + 1) * sizeof(char));
-		if (!dest[i])
-			return (free_word(dest, i + 1));
-		ft_strncpy(dest[i++], s, word_len);
-		s += word_len;
+		if (str[i] == '\n')
+		{
+			i++; 
+			dest[0] = malloc(i * sizeof(char));
+			dest[1] = malloc((BUFFER_SIZE - i) * sizeof(char));
+			ft_strncpy(dest[0], str, i);
+			ft_strncpy(dest[1], str + i, BUFFER_SIZE - i);
+			break;
+		}
+		i++;
 	}
-	dest[nbr_word] = NULL;
 	return (dest);
 }
-

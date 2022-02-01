@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/01 23:46:12 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/02 00:45:55 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int main()
 	
 	fd = open("file.txt", O_RDONLY);
 	
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
 	printf("%s", get_next_line(fd));
-
 }
 
 char	*get_next_line(int fd)
@@ -31,18 +33,18 @@ char	*get_next_line(int fd)
 	char			buff[BUFFER_SIZE];
 	char			*line;
 	char			**split;
-	//static char*	next_line;
+	static char 	save[BUFFER_SIZE];
 
-	ret = read(fd, buff, BUFFER_SIZE);
-	//printf("%s\n", buff);
-	line = "";
-
-	//ft_strjoin(line, next_line);		// si il restait des caractères dans le buffer à l'appel précèdent il faut les rajouter
+	ft_strncpy(buff, save, BUFFER_SIZE);		// il ne peut pas avoir + de BUFFERSIZE element qui reste 
+	ret = 1;
+	line = "";	// pour le premier join 
 	while (ret > 0 && ft_memchr(buff, '\n', BUFFER_SIZE) == NULL) // on lit au moins 1 octet
 	{
 		// free avant chaque join 
+		
 		line = ft_strjoin(line, buff);
 		ret = read(fd, buff, BUFFER_SIZE);		// continue a lire
+		
 	}
 	if (ret == -1)	// erreur de read, free ?
 		return (NULL);
@@ -52,10 +54,9 @@ char	*get_next_line(int fd)
 	}
 	else	// fin de ligne  
 	{
-		// enlever de line + stocker la fin du read apres le \n
-		split = ft_split(buff);
+		split = ft_split(buff);		// enlever de line + stocker la fin du read apres le \n
 		line = ft_strjoin(line, split[0]);
-		//next_line = split[1];
+		ft_strncpy(save, split[1], BUFFER_SIZE);
 	}
 	return (line);
 }

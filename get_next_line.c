@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/02 23:52:16 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/03 00:24:44 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <fcntl.h>
 # include "stdio.h"
 
-
+/*
 int main()
 {
 	int	fd;
@@ -37,6 +37,7 @@ int main()
 	// printf("%s", get_next_line(fd));
 	// printf("%s", get_next_line(fd));
 }
+*/
 
 char	*get_next_line(int fd)
 {	
@@ -44,7 +45,7 @@ char	*get_next_line(int fd)
 	static char		buff[BUFFER_SIZE + 1];
 	char			*line;
 	char			*temp;
-	char			**split;
+
 	//static char		*save;
 	//free(save);
 	if (fd < 0 || BUFFER_SIZE < 1 || fd >= FOPEN_MAX)
@@ -58,30 +59,33 @@ char	*get_next_line(int fd)
 		free(temp);
 		ret = read(fd, buff, BUFFER_SIZE);		// continue a lire
 	}
-	
 	temp = line;
 	buff[ret] = '\0';
-
-	if (ret == -1 || ret == 0)	// erreur de read ou fin de fichier (rien read)
+	if (ret == -1 || ret == 0)	// erreur de read ou fin de fichier
 	{
 		free(temp);
 		return (NULL);
 	}
 	else if (ret == BUFFER_SIZE)	// fin de ligne  
-	{
-		split = ft_split(buff, '\n');		// enlever de line + stocker la fin du read apres le \n
-		line = ft_strjoin(line, split[0]);
-		ft_strncpy(buff, split[1], BUFFER_SIZE);
-		free(split[0]);
-		free(split[1]);
-		free(split);
-	}
+		line = end_of_line(buff, line);
 	else // fin fichier (ret < BUFFER_SIZE)
-	{
 		line = ft_strjoin(line, buff);
-	}
 	//save = line;
 	free(temp);
+	return (line);
+}
+
+
+char	*end_of_line(char *buff, char *line)
+{
+	char	**split;
+
+	split = ft_split(buff, '\n');		// enlever de line + stocker la fin du read apres le \n
+	line = ft_strjoin(line, split[0]);
+	ft_strncpy(buff, split[1], BUFFER_SIZE);
+	free(split[0]);
+	free(split[1]);
+	free(split);
 	return (line);
 }
 

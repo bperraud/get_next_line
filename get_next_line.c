@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/02 18:58:41 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/02 23:52:16 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,33 @@
 int main()
 {
 	int	fd;
-	//char *str;
-	
+	char *str;
 	//fd = open("gnlTester/files/empty", O_RDONLY);
 	fd = open("file.txt", O_RDONLY);
 
-/*
 	str = get_next_line(fd);	
 	while (str)
 	{
-		str = get_next_line(fd);
 		printf("%s", str);
-		free(str);
+		//free(str);
+		str = get_next_line(fd);
 	}
-	*/
-
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
+	free(str);
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
 }
-
 
 char	*get_next_line(int fd)
 {	
 	int				ret;
-	static char		buff[BUFFER_SIZE];
-	//static char		*save;
+	static char		buff[BUFFER_SIZE + 1];
 	char			*line;
 	char			*temp;
 	char			**split;
-	
+	//static char		*save;
 	//free(save);
 	if (fd < 0 || BUFFER_SIZE < 1 || fd >= FOPEN_MAX)
         return (NULL);
@@ -63,10 +58,14 @@ char	*get_next_line(int fd)
 		free(temp);
 		ret = read(fd, buff, BUFFER_SIZE);		// continue a lire
 	}
-	if (ret == -1)	// erreur de read, free ?
+	
+	temp = line;
+	buff[ret] = '\0';
+
+	if (ret == -1 || ret == 0)	// erreur de read ou fin de fichier (rien read)
 	{
-		free(line);
-		return (NULL);	
+		free(temp);
+		return (NULL);
 	}
 	else if (ret == BUFFER_SIZE)	// fin de ligne  
 	{
@@ -77,19 +76,12 @@ char	*get_next_line(int fd)
 		free(split[1]);
 		free(split);
 	}
-	else if (ret == 0) // fin de fichier (fini au dernier appel)
+	else // fin fichier (ret < BUFFER_SIZE)
 	{
-		free(line);
-		return (NULL);
-	}
-	else // fin fichier
-	{
-		printf("ret : %d", ret);
-		buff[ret] = '\0';
 		line = ft_strjoin(line, buff);
-		return (line);
 	}
 	//save = line;
+	free(temp);
 	return (line);
 }
 

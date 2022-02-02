@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/02 16:52:49 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:14:49 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,17 @@ char	*get_next_line(int fd)
 	int				ret;
 	static char		buff[BUFFER_SIZE];
 	char			*line;
-	//char			*temp;
+	char			*temp;
 	char			**split;
 
 	ret = BUFFER_SIZE;
-	//line = "";
-	//line = malloc(2 * sizeof(char));
-	line = "";
-	//line[1] = '\0' ;
+	line = ft_strdup("");
 	while (ret == BUFFER_SIZE && ft_memchr(buff, '\n', BUFFER_SIZE) == NULL) // on lit au moins 1 octet
 	{
 		// free avant chaque join 
-		//temp = line;
+		temp = line;
 		line = ft_strjoin(line, buff);
-		//free(temp);
+		free(temp);
 		ret = read(fd, buff, BUFFER_SIZE);		// continue a lire
 	}
 	if (ret == -1)	// erreur de read, free ?
@@ -68,4 +65,29 @@ char	*get_next_line(int fd)
 		return (line);
 	}
 	return (line);
+}
+
+
+static char	*ft_strcpy(char *dest, const char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*dest;
+
+	dest = malloc(((ft_strlen(s1)) + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	return (ft_strcpy(dest, s1));
 }

@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/02 17:44:40 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:46:26 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ char	*get_next_line(int fd)
 		ret = read(fd, buff, BUFFER_SIZE);		// continue a lire
 	}
 	if (ret == -1)	// erreur de read, free ?
-		return (NULL);
+	{
+		free(line);
+		return (NULL);	
+	}
+		
 	else if (ret == BUFFER_SIZE)	// fin de ligne  
 	{
 		split = ft_split(buff, '\n');		// enlever de line + stocker la fin du read apres le \n

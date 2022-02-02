@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:04:39 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/01 23:45:59 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:17:22 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,24 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		return (NULL);
 }
 
-static char	*ft_strncpy(char *dest, const char *src, unsigned int n)
+char	*ft_strncpy(char *dest, const char *src, unsigned int n)
 {
 	unsigned int	i;
 
 	i = 0;
-	while (src[i] != '\0' && i < n)
+	if (src)
 	{
-		dest[i] = src[i];
-		i++;
+		while (src[i] != '\0' && i < n)
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		while (i < n)
+		{
+			dest[i] = '\0';
+			i++;
+		}
 	}
-	dest[i] = '\0';
 	return (dest);
 }
 
@@ -74,11 +81,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-
-
-#include "stdio.h"
-
-char	**ft_split(char const *str)
+char	**ft_split(char const *str, const char c)
 {
 	char	**dest;
 	int		i;
@@ -87,7 +90,7 @@ char	**ft_split(char const *str)
 	dest = malloc(2 * sizeof(char *));
 	while (str[i])
 	{
-		if (str[i] == '\n')
+		if (str[i] == c)
 		{
 			i++; 
 			dest[0] = malloc(i * sizeof(char));

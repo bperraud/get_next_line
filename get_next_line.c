@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/02 01:26:58 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:21:42 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int main()
 	
 	fd = open("file.txt", O_RDONLY);
 	
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 }
 
@@ -48,13 +48,16 @@ char	*get_next_line(int fd)
 		return (NULL);
 	else if (ret == BUFFER_SIZE)	// fin de ligne  
 	{
+		//printf("buff : %s\n", buff);
 		split = ft_split(buff, '\n');		// enlever de line + stocker la fin du read apres le \n
 		line = ft_strjoin(line, split[0]);
+		//printf("line : %s\n", line);
 		ft_strncpy(save, split[1], BUFFER_SIZE);
+		//printf("save : %s\n", save);
 	}
 	else // fin du fichier = pas de '\n'	/ vraiment utile ? avant d'avoir ret == 0 le fichier a deja été lu en entier 
 	{
-		ft_strncpy(buff, buff, ret);
+		buff[ret] = '\0';
 		line = ft_strjoin(line, buff);
 		return (line);
 	}

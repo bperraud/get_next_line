@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/05 18:28:47 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:43:37 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <fcntl.h>
 # include "stdio.h"
 
-
+/*
 int main()
 {
 	int	fd;
@@ -37,7 +37,7 @@ int main()
 	// printf("%s", get_next_line(fd));
 	// printf("%s", get_next_line(fd));
 }
-
+*/
 
 char	*get_next_line(int fd)
 {	
@@ -50,7 +50,6 @@ char	*get_next_line(int fd)
         return (NULL);
 	ret = BUFFER_SIZE;
 	line = ft_strdup("");
-	
 	while (ret == BUFFER_SIZE && ft_memchr(buff, '\n', BUFFER_SIZE) == NULL)
 	{
 		temp = line;
@@ -59,21 +58,35 @@ char	*get_next_line(int fd)
 		ret = read(fd, buff, BUFFER_SIZE);		// continue a lire
 	}
 	temp = line;
-	buff[ret] = '\0';
-	if (ret == -1 || ret == 0)	// erreur de read ou fin de fichier
+	//buff[ret] = '\0';
+
+	ft_bzero(buff + ret , BUFFER_SIZE + 1 - ret );
+
+	if (ret == -1 || ret == 0)	// erreur de read ou fin de fichier (plus rien à lire)
 	{
-		if (line[0] != '\0')
+		if (line[0] != '\0')		// si ret = 0 mais qu'il reste dans le buff
 			return (line);
 		free(temp);
 		return (NULL);
 	}
-	else 
-	{//if (ret < BUFFER_SIZE){			// fin de ligne return split[0] save split[1], si fin de fichier, split ne change rien et return buff ? 
-		line = end_of_line(line, buff);
+	else //if (ret < BUFFER_SIZE){
+	{			// fin de ligne return split[0] save split[1], si fin de fichier, split ne change rien et return buff ? 
+		
+		if (ft_memchr(buff, '\n', BUFFER_SIZE) != NULL)		// fin de ligne -> split
+		{
+			line = end_of_line(line, buff);
+		}
+		else	// fin de fichier
+		{
+			printf("line : %s\n", line);
+			printf("buff : %s\n", buff);
+			line = ft_strjoin(line, buff);
+			printf("line : %s\n", line);
+		}
+	
 	}			
 	free(temp);
-	printf("line : %s\n", line);
-	printf("buff : %s\n", buff);
+	
 	return (line);
 }
 

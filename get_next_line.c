@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/05 18:47:46 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:55:06 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <fcntl.h>
 # include "stdio.h"
 
-/*
+
 int main()
 {
 	int	fd;
@@ -24,20 +24,27 @@ int main()
 	fd = open("file.txt", O_RDONLY);
 
 	str = get_next_line(fd);	
-	while (str)
-	{
-		printf("%s", str);
-		//free(str);
-		str = get_next_line(fd);
-	}
+	printf("%s", str);
 	free(str);
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
+		
+	char *str2 = get_next_line(fd);
+	printf("%s", str2);
+	free(str2);
+
+	char *str3 = get_next_line(fd);
+	printf("%s", str3);
+	free(str3);
+
+	char *str4 = get_next_line(fd);
+	printf("%s", str4);
+	//printf("\nchar : %c\n", str4[16]);
+	free(str4);
+
+	char *str5 = get_next_line(fd);
+	printf("%s", str5);
+	free(str5);
 }
-*/
+
 
 char	*get_next_line(int fd)
 {	
@@ -78,10 +85,12 @@ char	*get_next_line(int fd)
 		}
 		else	// fin de fichier
 		{
-			// printf("line : %s\n", line);
-			// printf("buff : %s\n", buff);
+			printf("line : %s\n", line);
+			printf("buff : %s\n", buff);
 			line = ft_strjoin(line, buff);
-			
+			printf("line : %s\n", line);
+			ft_bzero(buff, BUFFER_SIZE + 1);
+			return (line);
 		}
 	
 	}			

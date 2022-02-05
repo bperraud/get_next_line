@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/05 18:55:06 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:56:29 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <fcntl.h>
 # include "stdio.h"
 
-
+/*
 int main()
 {
 	int	fd;
@@ -43,7 +43,7 @@ int main()
 	char *str5 = get_next_line(fd);
 	printf("%s", str5);
 	free(str5);
-}
+} */
 
 
 char	*get_next_line(int fd)
@@ -85,10 +85,9 @@ char	*get_next_line(int fd)
 		}
 		else	// fin de fichier
 		{
-			printf("line : %s\n", line);
-			printf("buff : %s\n", buff);
+			//printf("line : %s\n", line);
+			//printf("buff : %s\n", buff);
 			line = ft_strjoin(line, buff);
-			printf("line : %s\n", line);
 			ft_bzero(buff, BUFFER_SIZE + 1);
 			return (line);
 		}

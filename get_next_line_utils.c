@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:04:39 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/02 16:17:22 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:26:36 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	while (*s++)
+	while (s[i])
 		i++;
 	return (i);
 }

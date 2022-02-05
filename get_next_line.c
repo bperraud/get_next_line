@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/03 00:24:44 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:28:47 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <fcntl.h>
 # include "stdio.h"
 
-/*
+
 int main()
 {
 	int	fd;
@@ -37,7 +37,7 @@ int main()
 	// printf("%s", get_next_line(fd));
 	// printf("%s", get_next_line(fd));
 }
-*/
+
 
 char	*get_next_line(int fd)
 {	
@@ -46,12 +46,11 @@ char	*get_next_line(int fd)
 	char			*line;
 	char			*temp;
 
-	//static char		*save;
-	//free(save);
 	if (fd < 0 || BUFFER_SIZE < 1 || fd >= FOPEN_MAX)
         return (NULL);
 	ret = BUFFER_SIZE;
 	line = ft_strdup("");
+	
 	while (ret == BUFFER_SIZE && ft_memchr(buff, '\n', BUFFER_SIZE) == NULL)
 	{
 		temp = line;
@@ -63,20 +62,23 @@ char	*get_next_line(int fd)
 	buff[ret] = '\0';
 	if (ret == -1 || ret == 0)	// erreur de read ou fin de fichier
 	{
+		if (line[0] != '\0')
+			return (line);
 		free(temp);
 		return (NULL);
 	}
-	else if (ret == BUFFER_SIZE)	// fin de ligne  
-		line = end_of_line(buff, line);
-	else // fin fichier (ret < BUFFER_SIZE)
-		line = ft_strjoin(line, buff);
-	//save = line;
+	else 
+	{//if (ret < BUFFER_SIZE){			// fin de ligne return split[0] save split[1], si fin de fichier, split ne change rien et return buff ? 
+		line = end_of_line(line, buff);
+	}			
 	free(temp);
+	printf("line : %s\n", line);
+	printf("buff : %s\n", buff);
 	return (line);
 }
 
 
-char	*end_of_line(char *buff, char *line)
+char	*end_of_line(char *line, char *buff)
 {
 	char	**split;
 
@@ -112,4 +114,13 @@ char	*ft_strdup(const char *s1)
 	if (!dest)
 		return (NULL);
 	return (ft_strcpy(dest, s1));
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	char	*us;
+
+	us = s;
+	while (n--)
+		*us++ = 0;
 }

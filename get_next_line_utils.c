@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:04:39 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/05 18:26:36 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:32:49 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_strncpy(char *dest, const char *src, unsigned int n)
 			dest[i] = src[i];
 			i++;
 		}
-		while (i < n)
+		while (i <= n)
 		{
 			dest[i] = '\0';
 			i++;

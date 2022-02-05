@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/05 19:33:22 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:35:11 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <fcntl.h>
 # include "stdio.h"
 
-
+/*
 int main()
 {
 	int	fd;
@@ -40,6 +40,7 @@ int main()
 	printf("last line : %s", str5);
 	free(str5);
 } 
+*/
 
 
 char	*get_next_line(int fd)

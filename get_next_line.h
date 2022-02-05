@@ -6,14 +6,14 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:23:43 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/05 19:33:39 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:34:59 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 13
+//# define BUFFER_SIZE 1
 
 # include <stdlib.h>
 # include <unistd.h>

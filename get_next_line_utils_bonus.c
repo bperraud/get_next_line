@@ -90,12 +90,12 @@ char	**ft_split(char const *str, const char c)
 	{
 		if (str[i] == c)
 		{
-			i++; 
+			i++;
 			dest[0] = malloc(i * sizeof(char));
 			dest[1] = malloc((BUFFER_SIZE - i) * sizeof(char));
 			ft_strncpy(dest[0], str, i);
 			ft_strncpy(dest[1], str + i, BUFFER_SIZE - i);
-			break;
+			break ;
 		}
 		i++;
 	}

@@ -14,14 +14,16 @@
 
 char	*get_next_line(int fd)
 {
-	if (fd < 0 || BUFFER_SIZE == 0 || BUFFER_SIZE > 10000000000 || fd > FOPEN_MAX)
-        return (NULL);
-	else 
-		return (true_gnl(fd));	
+	if (fd < 0 || fd > FOPEN_MAX)
+		return (NULL);
+	if (BUFFER_SIZE == 0 || BUFFER_SIZE > 10000000000)
+		return (NULL);
+	else
+		return (true_gnl(fd));
 }
 
 char	*true_gnl(int fd)
-{	
+{
 	long			ret;
 	static char		buff[FOPEN_MAX][BUFFER_SIZE + 1];
 	char			*line;
@@ -35,7 +37,7 @@ char	*true_gnl(int fd)
 		temp = line;
 		line = ft_strjoin(line, buff[fd]);
 		free(temp);
-		ret = read(fd, buff[fd], BUFFER_SIZE);	
+		ret = read(fd, buff[fd], BUFFER_SIZE);
 	}
 	temp = line;
 	i = BUFFER_SIZE + 1;
@@ -46,7 +48,7 @@ char	*true_gnl(int fd)
 
 char	*true_gnl_2(long ret, char *line, char *buff, char *temp)
 {
-	if (ret == -1 || ret == 0)	
+	if (ret == -1 || ret == 0)
 	{
 		if (ret == 0 && line[0] != '\0')
 			return (line);
@@ -54,16 +56,16 @@ char	*true_gnl_2(long ret, char *line, char *buff, char *temp)
 		return (NULL);
 	}
 	else
-	{			
-		if (ft_memchr(buff, '\n', BUFFER_SIZE) != NULL)		
+	{
+		if (ft_memchr(buff, '\n', BUFFER_SIZE) != NULL)
 			line = end_of_line(line, buff);
-		else	
+		else
 		{
 			line = ft_strjoin(line, buff);
 			while (ret--)
 				*buff++ = 0;
 		}
-	}			
+	}
 	free(temp);
 	return (line);
 }
@@ -72,7 +74,7 @@ char	*end_of_line(char *line, char *buff)
 {
 	char	**split;
 
-	split = ft_split(buff, '\n');		
+	split = ft_split(buff, '\n');
 	line = ft_strjoin(line, split[0]);
 	ft_strncpy(buff, split[1], BUFFER_SIZE);
 	free(split[0]);

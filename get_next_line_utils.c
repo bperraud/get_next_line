@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:04:39 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/06 16:05:49 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/06 19:41:43 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ char	**ft_split(char const *str, const char c)
 	{
 		if (str[i] == c)
 		{
-			i++; 
+			i++;
 			dest[0] = malloc(i * sizeof(char));
 			dest[1] = malloc((BUFFER_SIZE - i) * sizeof(char));
 			ft_strncpy(dest[0], str, i);
 			ft_strncpy(dest[1], str + i, BUFFER_SIZE - i);
-			break;
+			break ;
 		}
 		i++;
 	}

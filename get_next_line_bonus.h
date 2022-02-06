@@ -23,9 +23,9 @@ char	*true_gnl(int fd);
 char	*true_gnl_2(long ret, char *line, char *buff, char *temp);
 void	*ft_memchr(const void *s, int c, long n);
 char	*ft_strjoin(char const *s1, char const *s2);
-char    *ft_strncpy(char *dest, const char *src, long n);
+char	*ft_strncpy(char *dest, const char *src, long n);
 char	**ft_split(char const *s, const char c);
-size_t  ft_strlen(const char *s);
+size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 char	*end_of_line(char *buff, char *line);
 

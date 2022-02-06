@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/06 15:01:43 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/06 15:02:17 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_next_line(int fd)
 	}
 	temp = line;
 	ft_bzero(buff + ret , BUFFER_SIZE + 1);
-	return (get_next_line_2(fd, ret, line, buff, temp));
+	return (get_next_line_2(ret, line, buff, temp));
 }
 
 char	*get_next_line_2(int ret, char *line, char *buff, char *temp)

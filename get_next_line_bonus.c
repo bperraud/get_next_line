@@ -15,7 +15,7 @@
 char	*get_next_line(int fd)
 {	
 	int				ret;
-	static char		buff[BUFFER_SIZE + 1];
+	static char		buff[FOPEN_MAX][BUFFER_SIZE + 1];
 	char			*line;
 	char			*temp;
 
@@ -23,16 +23,16 @@ char	*get_next_line(int fd)
         return (NULL);
 	ret = BUFFER_SIZE;
 	line = ft_strdup("");
-	while (ret == BUFFER_SIZE && ft_memchr(buff, '\n', BUFFER_SIZE) == NULL)
+	while (ret == BUFFER_SIZE && ft_memchr(buff[fd], '\n', BUFFER_SIZE) == NULL)
 	{
 		temp = line;
-		line = ft_strjoin(line, buff);
+		line = ft_strjoin(line, buff[fd]);
 		free(temp);
-		ret = read(fd, buff, BUFFER_SIZE);		
+		ret = read(fd, buff[fd], BUFFER_SIZE);		
 	}
 	temp = line;
-	ft_bzero(buff + ret, BUFFER_SIZE + 1);
-	return (get_next_line_2(ret, line, buff, temp));
+	ft_bzero(buff[fd] + ret, BUFFER_SIZE + 1);
+	return (get_next_line_2(ret, line, buff[fd], temp));
 }
 
 char	*get_next_line_2(int ret, char *line, char *buff, char *temp)

@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:23:43 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/06 15:01:46 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/06 15:22:28 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "stdio.h"
+# include <stdio.h>
 
 char	*get_next_line(int fd);
 char	*get_next_line_2(int ret, char *line, char *buff, char *temp);

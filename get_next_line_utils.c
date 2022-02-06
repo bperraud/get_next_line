@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:04:39 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/06 15:23:36 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/06 16:05:49 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, long n)
 {
 	const unsigned char	*cs;
 	unsigned char		uc;
@@ -40,7 +40,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		return (NULL);
 }
 
-char	*ft_strncpy(char *dest, const char *src, unsigned int n)
+char	*ft_strncpy(char *dest, const char *src, long n)
 {
 	unsigned int	i;
 

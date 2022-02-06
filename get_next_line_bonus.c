@@ -13,14 +13,21 @@
 #include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
+{
+	if (fd < 0 || BUFFER_SIZE == 0 || BUFFER_SIZE > 10000000000 || fd > FOPEN_MAX)
+        return (NULL);
+	else 
+		return (true_gnl(fd));	
+}
+
+char	*true_gnl(int fd)
 {	
-	int				ret;
+	long			ret;
 	static char		buff[FOPEN_MAX][BUFFER_SIZE + 1];
 	char			*line;
 	char			*temp;
+	long			i;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || fd > FOPEN_MAX)
-        return (NULL);
 	ret = BUFFER_SIZE;
 	line = ft_strdup("");
 	while (ret == BUFFER_SIZE && ft_memchr(buff[fd], '\n', BUFFER_SIZE) == NULL)
@@ -28,18 +35,20 @@ char	*get_next_line(int fd)
 		temp = line;
 		line = ft_strjoin(line, buff[fd]);
 		free(temp);
-		ret = read(fd, buff[fd], BUFFER_SIZE);		
+		ret = read(fd, buff[fd], BUFFER_SIZE);	
 	}
 	temp = line;
-	ft_bzero(buff[fd] + ret, BUFFER_SIZE + 1);
-	return (get_next_line_2(ret, line, buff[fd], temp));
+	i = BUFFER_SIZE + 1;
+	while (i > ret - 1)
+		buff[fd][i--] = 0;
+	return (true_gnl_2(ret, line, buff[fd], temp));
 }
 
-char	*get_next_line_2(int ret, char *line, char *buff, char *temp)
+char	*true_gnl_2(long ret, char *line, char *buff, char *temp)
 {
 	if (ret == -1 || ret == 0)	
 	{
-		if (line[0] != '\0')		
+		if (ret == 0 && line[0] != '\0')
 			return (line);
 		free(temp);
 		return (NULL);
@@ -51,7 +60,8 @@ char	*get_next_line_2(int ret, char *line, char *buff, char *temp)
 		else	
 		{
 			line = ft_strjoin(line, buff);
-			ft_bzero(buff, BUFFER_SIZE + 1);
+			while (ret--)
+				*buff++ = 0;
 		}
 	}			
 	free(temp);
@@ -87,13 +97,4 @@ char	*ft_strdup(const char *s1)
 	}
 	dest[i] = '\0';
 	return (dest);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	char	*us;
-
-	us = s;
-	while (n--)
-		*us++ = 0;
 }

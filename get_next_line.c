@@ -6,40 +6,22 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/06 18:48:40 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/06 19:08:55 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*
-int main()
-{
-	int	fd;
-	char *str;
-	//fd = open("gnlTester/files/empty", O_RDONLY);
-	fd = open("gnlTester/files/43_with_nl", O_RDONLY);
-	str = get_next_line(fd);	
-	printf("%s", str);
-	//free(str);
-		
-	char *str2 = get_next_line(fd);
-	printf("%s", str2);
-	//free(str2);
-	char *str3 = get_next_line(fd);
-	printf("%s", str3);
-	//free(str3);
-	char *str4 = get_next_line(fd);
-	printf("%s", str4);
-	//printf("\nchar : %c\n", str4[16]);
-	//free(str4);
-	char *str5 = get_next_line(fd);
-	printf("%s", str5);
-	//free(str5);
-}
-*/
-
 char	*get_next_line(int fd)
+{
+	if (fd < 0 || BUFFER_SIZE == 0 || BUFFER_SIZE > 10000000000 || fd > FOPEN_MAX)
+        return (NULL);
+	else 
+		return (true_gnl(fd));	
+}
+
+
+char	*true_gnl(int fd)
 {	
 	long			ret;
 	static char		buff[BUFFER_SIZE + 1];
@@ -47,8 +29,6 @@ char	*get_next_line(int fd)
 	char			*temp;
 	long			i;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || fd > FOPEN_MAX)
-        return (NULL);
 	ret = BUFFER_SIZE;
 	line = ft_strdup("");
 	while (ret == BUFFER_SIZE && ft_memchr(buff, '\n', BUFFER_SIZE) == NULL)
@@ -59,14 +39,13 @@ char	*get_next_line(int fd)
 		ret = read(fd, buff, BUFFER_SIZE);	
 	}
 	temp = line;
-	//ft_bzero(buff + ret, BUFFER_SIZE + 1);
 	i = BUFFER_SIZE + 1;
 	while (i > ret - 1)
 		buff[i--] = 0;
-	return (get_next_line_2(ret, line, buff, temp));
+	return (true_gnl_2(ret, line, buff, temp));
 }
 
-char	*get_next_line_2(long ret, char *line, char *buff, char *temp)
+char	*true_gnl_2(long ret, char *line, char *buff, char *temp)
 {
 	if (ret == -1 || ret == 0)	
 	{
@@ -119,13 +98,4 @@ char	*ft_strdup(const char *s1)
 	}
 	dest[i] = '\0';
 	return (dest);
-}
-
-void	ft_bzero(void *s, long n)
-{
-	char	*us;
-
-	us = s;
-	while (n--)
-		*us++ = 0;
 }

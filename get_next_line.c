@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/05 19:39:16 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/06 15:00:17 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ char	*get_next_line(int fd)
 	}
 	temp = line;
 	ft_bzero(buff + ret , BUFFER_SIZE + 1);
+	return (get_next_line_2(fd, ret, line, buff, temp));
+}
+
+char	*get_next_line_2(int fd, int ret, char *line, char *buff, char *temp)
+{
 	if (ret == -1 || ret == 0)	
 	{
 		if (line[0] != '\0')		
@@ -53,12 +58,11 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-
 char	*end_of_line(char *line, char *buff)
 {
 	char	**split;
 
-	split = ft_split(buff, '\n');		// enlever de line + stocker la fin du read apres le \n
+	split = ft_split(buff, '\n');		
 	line = ft_strjoin(line, split[0]);
 	ft_strncpy(buff, split[1], BUFFER_SIZE);
 	free(split[0]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
+/*   By: bperraud <bperraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/06 19:50:30 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/09 17:39:40 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	if (fd < 0 || fd > FOPEN_MAX)
-		return (NULL);
-	if (BUFFER_SIZE == 0 || BUFFER_SIZE > 10000000000)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || BUFFER_SIZE >= ULONG_MAX)
 		return (NULL);
 	else
 		return (true_gnl(fd));

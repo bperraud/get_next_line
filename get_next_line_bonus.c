@@ -14,9 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	if (fd < 0 || fd > FOPEN_MAX)
-		return (NULL);
-	if (BUFFER_SIZE == 0 || BUFFER_SIZE > 10000000000)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || BUFFER_SIZE >= ULONG_MAX)
 		return (NULL);
 	else
 		return (true_gnl(fd));
@@ -25,7 +23,7 @@ char	*get_next_line(int fd)
 char	*true_gnl(int fd)
 {
 	long			ret;
-	static char		buff[FOPEN_MAX][BUFFER_SIZE + 1];
+	static char		buff[OPEN_MAX][BUFFER_SIZE + 1];
 	char			*line;
 	char			*temp;
 	long			i;
@@ -40,9 +38,9 @@ char	*true_gnl(int fd)
 		ret = read(fd, buff[fd], BUFFER_SIZE);
 	}
 	temp = line;
-	i = BUFFER_SIZE + 1;
-	while (i > ret - 1)
-		buff[fd][i--] = 0;
+	i = ret;
+	while (i < BUFFER_SIZE + 1)
+		buff[fd][i++] = 0;
 	return (true_gnl_2(ret, line, buff[fd], temp));
 }
 

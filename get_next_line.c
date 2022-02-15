@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/15 16:04:16 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:23:26 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || BUFFER_SIZE > ULONG_MAX)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || BUFFER_SIZE > 1000000000)
 		return (NULL);
 	else
 		return (true_gnl(fd));

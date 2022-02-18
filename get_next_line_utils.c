@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:04:39 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/18 19:43:02 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/18 19:51:11 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,27 +79,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-
-char	*ft_strcpy(char *dest, const char *src, long n)
-{
-	unsigned int	i;
-
-	i = 0;
-	if (src)
-	{
-		while (src[i] != '\0' && i < n)
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}
-	return (dest);
-}
-
-#include "stdio.h"
-#include "string.h"
-
 char	**ft_split(char const *str, const char c)
 {
 	char	**dest;
@@ -114,13 +93,10 @@ char	**ft_split(char const *str, const char c)
 		if (str[i] == c)
 		{
 			i++;
-			dest[0] = malloc(i * sizeof(char));
-			dest[1] = malloc((BUFFER_SIZE - i) * sizeof(char));
+			dest[0] = malloc((i + 1) * sizeof(char));
+			dest[1] = malloc((BUFFER_SIZE - i + 1) * sizeof(char));
 			if (!dest[0] || !dest[1])
 				return (NULL);
-
-			//strncpy(dest[0], str, i);
-			//strncpy(dest[1], str + i, BUFFER_SIZE - i);
 			ft_strncpy(dest[0], str, i);
 			ft_strncpy(dest[1], str + i, BUFFER_SIZE - i);
 			break ;

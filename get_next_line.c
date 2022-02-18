@@ -6,29 +6,11 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/18 19:42:13 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/18 20:03:14 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include "stdio.h"
-#include "fcntl.h"
-
-int main()
-{
-	//int fd = open("get_next_line.h", O_RDONLY);
-	int fd = open("gnlTester/files/get_next_line.h", O_RDONLY);
-	char *str;
-
-	while ((str = get_next_line(fd)))
-	{
-		printf("%s", str);
-		free(str);
-	}
-	printf("%s", str);
-	free(str);
-}
 
 char	*get_next_line(int fd)
 {
@@ -95,12 +77,6 @@ char	*end_of_line(char *line, char *buff)
 	ft_strncpy(buff, split[1], BUFFER_SIZE);
 	if (split)
 	{
-		//printf("len of split : %d", ft_strlen(split));
-		//free(split);
-
-		//printf("split 0: %s\n", split[0]);
-		//printf("split 1: %s\n", split[1]);
-
 		free(split[0]);
 		free(split[1]);
 		free(split);

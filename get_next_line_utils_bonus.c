@@ -85,19 +85,24 @@ char	**ft_split(char const *str, const char c)
 	int		i;
 
 	i = 0;
-	dest = malloc(2 * sizeof(char *));
+	dest = malloc(3 * sizeof(char *));
+	if (!dest)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == c)
 		{
 			i++;
-			dest[0] = malloc(i * sizeof(char));
-			dest[1] = malloc((BUFFER_SIZE - i) * sizeof(char));
+			dest[0] = malloc((i + 1) * sizeof(char));
+			dest[1] = malloc((BUFFER_SIZE - i + 1) * sizeof(char));
+			if (!dest[0] || !dest[1])
+				return (NULL);
 			ft_strncpy(dest[0], str, i);
 			ft_strncpy(dest[1], str + i, BUFFER_SIZE - i);
 			break ;
 		}
 		i++;
 	}
+	dest[2] = NULL;
 	return (dest);
 }

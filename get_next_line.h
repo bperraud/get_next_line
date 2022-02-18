@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperraud <bperraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:23:43 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/09 17:42:20 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/18 20:02:53 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
+# if BUFFER_SIZE < -1
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE -1
+# endif
+# if BUFFER_SIZE > 2147483646
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 2147483646
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>

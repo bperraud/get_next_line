@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperraud <bperraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/15 16:23:26 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/18 19:42:13 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+#include "stdio.h"
+#include "fcntl.h"
+
+int main()
+{
+	//int fd = open("get_next_line.h", O_RDONLY);
+	int fd = open("gnlTester/files/get_next_line.h", O_RDONLY);
+	char *str;
+
+	while ((str = get_next_line(fd)))
+	{
+		printf("%s", str);
+		free(str);
+	}
+	printf("%s", str);
+	free(str);
+}
 
 char	*get_next_line(int fd)
 {
@@ -38,9 +56,9 @@ char	*true_gnl(int fd)
 		ret = read(fd, buff, BUFFER_SIZE);
 	}
 	temp = line;
-	i = BUFFER_SIZE + 1;
-	while (i > ret - 1)
-		buff[i--] = 0;
+	i = ret;
+	while (i < BUFFER_SIZE + 1)
+		buff[i++] = 0;
 	return (true_gnl_2(ret, line, buff, temp));
 }
 
@@ -75,9 +93,18 @@ char	*end_of_line(char *line, char *buff)
 	split = ft_split(buff, '\n');
 	line = ft_strjoin(line, split[0]);
 	ft_strncpy(buff, split[1], BUFFER_SIZE);
-	free(split[0]);
-	free(split[1]);
-	free(split);
+	if (split)
+	{
+		//printf("len of split : %d", ft_strlen(split));
+		//free(split);
+
+		//printf("split 0: %s\n", split[0]);
+		//printf("split 1: %s\n", split[1]);
+
+		free(split[0]);
+		free(split[1]);
+		free(split);
+	}
 	return (line);
 }
 

@@ -30,6 +30,8 @@ char	*true_gnl(int fd)
 
 	ret = BUFFER_SIZE;
 	line = malloc(1 * sizeof(char));
+	if (!line)
+		return (NULL);
 	line[0] = '\0';
 	while (ret == BUFFER_SIZE && ft_memchr(buff[fd], '\n', BUFFER_SIZE) == NULL)
 	{
@@ -74,10 +76,15 @@ char	*end_of_line(char *line, char *buff)
 	char	**split;
 
 	split = ft_split(buff, '\n');
-	line = ft_strjoin(line, split[0]);
-	ft_strncpy(buff, split[1], BUFFER_SIZE);
-	free(split[0]);
-	free(split[1]);
-	free(split);
-	return (line);
+	if (split)
+	{
+		line = ft_strjoin(line, split[0]);
+		ft_strncpy(buff, split[1], BUFFER_SIZE);
+		free(split[0]);
+		free(split[1]);
+		free(split);
+		return (line);
+	}
+	else
+		return (NULL);
 }

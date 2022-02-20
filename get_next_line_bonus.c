@@ -29,7 +29,8 @@ char	*true_gnl(int fd)
 	long			i;
 
 	ret = BUFFER_SIZE;
-	line = ft_strdup("");
+	line = malloc(1 * sizeof(char));
+	line[0] = '\0';
 	while (ret == BUFFER_SIZE && ft_memchr(buff[fd], '\n', BUFFER_SIZE) == NULL)
 	{
 		temp = line;
@@ -79,22 +80,4 @@ char	*end_of_line(char *line, char *buff)
 	free(split[1]);
 	free(split);
 	return (line);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*dest;
-	int		i;
-
-	dest = malloc(((ft_strlen(s1)) + 1) * sizeof(char));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (dest[i] != '\0')
-	{
-		dest[i] = s1[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: bperraud <bperraud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:22:45 by bperraud          #+#    #+#             */
-/*   Updated: 2022/02/18 20:11:29 by bperraud         ###   ########.fr       */
+/*   Updated: 2022/02/20 17:56:06 by bperraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	*true_gnl(int fd)
 	long			i;
 
 	ret = BUFFER_SIZE;
-	line = ft_strdup("");
+	line = malloc(1 * sizeof(char));
+	line[0] = '\0';
 	while (ret == BUFFER_SIZE && ft_memchr(buff, '\n', BUFFER_SIZE) == NULL)
 	{
 		temp = line;
@@ -82,22 +83,4 @@ char	*end_of_line(char *line, char *buff)
 		free(split);
 	}
 	return (line);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*dest;
-	int		i;
-
-	dest = malloc(((ft_strlen(s1)) + 1) * sizeof(char));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (dest[i] != '\0')
-	{
-		dest[i] = s1[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
